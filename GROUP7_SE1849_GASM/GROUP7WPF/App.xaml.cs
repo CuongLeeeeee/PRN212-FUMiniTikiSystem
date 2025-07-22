@@ -1,14 +1,50 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
 using System.Windows;
 
-namespace GROUP7WPF
+using Microsoft.EntityFrameworkCore;
+using GROUP7WPF;
+using FUMiniTikiSystem.DAL;
+using Microsoft.Extensions.Configuration;
+using FUMiniTikiSystem.DAL.Interfaces;
+
+namespace FUMiniTikiSystem.WPF
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
-    }
+        public static IHost AppHost { get; private set; }
 
+        public App()
+        {
+            AppHost = Host.CreateDefaultBuilder()
+                .ConfigureServices((context, services) =>
+                {
+                    // Register DbContext from appsettings.json
+                    var config = context.Configuration;
+                    services.AddDbContext<FuminiTikiSystemContext>(options =>
+                        options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+
+
+                })
+                .Build();
+        }
+
+        protected override async void OnStartup(StartupEventArgs e)
+        {
+            await AppHost.StartAsync();
+
+            // Mở MainWindow
+            var mainWindow = AppHost.Services.GetRequiredService<MainWindow>();
+            mainWindow.Show();
+
+            base.OnStartup(e);
+        }
+
+        protected override async void OnExit(ExitEventArgs e)
+        {
+            await AppHost.StopAsync();
+            base.OnExit(e);
+        }
+    }
 }
