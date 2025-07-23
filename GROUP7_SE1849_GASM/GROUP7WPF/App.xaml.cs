@@ -8,6 +8,9 @@ using GROUP7WPF;
 using FUMiniTikiSystem.DAL;
 using Microsoft.Extensions.Configuration;
 using FUMiniTikiSystem.DAL.Interfaces;
+using FUMiniTikiSystem.DAL.Repositories;
+using FUMiniTikiSystem.BLL.Services;
+using FUMiniTikiSystem.BLL.Interfaces;
 
 namespace FUMiniTikiSystem.WPF
 {
@@ -25,7 +28,11 @@ namespace FUMiniTikiSystem.WPF
                     services.AddDbContext<FuminiTikiSystemContext>(options =>
                         options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
+                    services.AddScoped<ICustomerRepository,CustomerRepository>();
+                    services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+                    // Add Services
+                    services.AddScoped<ICustomerService, CustomerService>();
                 })
                 .Build();
         }
