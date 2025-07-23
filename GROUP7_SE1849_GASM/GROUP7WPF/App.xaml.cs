@@ -1,18 +1,17 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Windows;
-
-using Microsoft.EntityFrameworkCore;
-using GROUP7WPF;
-using FUMiniTikiSystem.DAL;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.IO;
+using System.Windows;
+using FUMiniTikiSystem.DAL;
 using FUMiniTikiSystem.DAL.Interfaces;
 using FUMiniTikiSystem.DAL.Repositories;
-using FUMiniTikiSystem.BLL.Services;
 using FUMiniTikiSystem.BLL.Interfaces;
+using FUMiniTikiSystem.BLL.Services;
 
-namespace FUMiniTikiSystem.WPF
+namespace GROUP7WPF
 {
     public partial class App : Application
     {
@@ -21,18 +20,30 @@ namespace FUMiniTikiSystem.WPF
         public App()
         {
             AppHost = Host.CreateDefaultBuilder()
+                .ConfigureAppConfiguration((context, config) =>
+                {
+                    config.SetBasePath(Directory.GetCurrentDirectory());
+                    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                })
                 .ConfigureServices((context, services) =>
                 {
-                    // Register DbContext from appsettings.json
-                    var config = context.Configuration;
-                    services.AddDbContext<FuminiTikiSystemContext>(options =>
-                        options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+                    IConfiguration configuration = context.Configuration;
 
-                    services.AddScoped<ICustomerRepository,CustomerRepository>();
+                    // Đăng ký DbContext
+                    services.AddDbContext<FuminiTikiSystemContext>(options =>
+                        options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+                    // Đăng ký các repository, 
+                    services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+                    // Đăng ký các và service
+                    services.AddScoped<ICustomerService, CustomerService>();
+
+                    // Đăng ký unit of work 
                     services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-                    // Add Services
-                    services.AddScoped<ICustomerService, CustomerService>();
+                    // Đăng ký UI
+                    services.AddSingleton<MainWindow>();
                 })
                 .Build();
         }
@@ -41,7 +52,6 @@ namespace FUMiniTikiSystem.WPF
         {
             await AppHost.StartAsync();
 
-            // Mở MainWindow
             var mainWindow = AppHost.Services.GetRequiredService<MainWindow>();
             mainWindow.Show();
 
@@ -50,7 +60,10 @@ namespace FUMiniTikiSystem.WPF
 
         protected override async void OnExit(ExitEventArgs e)
         {
-            await AppHost.StopAsync();
+            using(AppHost)
+            {
+                await AppHost.StopAsync(TimeSpan.FromSeconds(5));
+            }
             base.OnExit(e);
         }
     }
