@@ -11,7 +11,7 @@ using FUMiniTikiSystem.DAL.Repositories;
 
 namespace FUMiniTikiSystem.BLL.Services
 {
-    public class CustomerService: ICustomerService
+    public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _repo;
         private readonly IUnitOfWork _unitOfWork;
@@ -23,7 +23,7 @@ namespace FUMiniTikiSystem.BLL.Services
 
         public async Task<bool> ChangePasswordAsync(int customerId, string oldPassword, string newPassword)
         {
-            var result =await _repo.ChangePasswordAsync(customerId, oldPassword, newPassword);
+            var result = await _repo.ChangePasswordAsync(customerId, oldPassword, newPassword);
             if(result) await _unitOfWork.SaveChangesAsync();
             return result;
         }
@@ -36,6 +36,39 @@ namespace FUMiniTikiSystem.BLL.Services
         public Task LogoutAsync()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<Customer>> GetAllAsync()
+        {
+            return (List<Customer>)await _repo.GetAllAsync();
+        }
+
+        public async Task AddAsync(Customer customer)
+        {
+            await _repo.AddAsync(customer);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Customer customer)
+        {
+            Customer? oldCustomer = await _repo.GetByIdAsync(customer.CustomerId);
+            if(oldCustomer != null)
+            {
+                oldCustomer.Password = customer.Password;
+                oldCustomer.Email = customer.Email;
+                oldCustomer.Name = customer.Name;
+               await  _unitOfWork.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteAsync(Customer customer)
+        {
+            Customer? oldCustomer = await _repo.GetByIdAsync(customer.CustomerId);
+            if(oldCustomer != null)
+            {
+                _repo.Delete(customer);
+                await _unitOfWork.SaveChangesAsync();
+            }
         }
     }
 }

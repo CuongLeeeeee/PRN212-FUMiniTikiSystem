@@ -12,5 +12,9 @@ namespace FUMiniTikiSystem.BLL.Interfaces
         Task<Customer?> LoginAsync(string email, string password);
         Task<bool> ChangePasswordAsync(int customerId, string oldPassword, string newPassword);
         Task LogoutAsync();
+        Task<List<Customer>> GetAllAsync();
+        Task AddAsync(Customer customer);
+        Task UpdateAsync(Customer customer);
+        Task DeleteAsync(Customer customer);
     }
 }
