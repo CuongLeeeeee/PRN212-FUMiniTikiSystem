@@ -9,8 +9,6 @@ namespace FUMiniTikiSystem.DAL.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<Product> Products { get; }
-        IRepository<Customer> Customers { get; }
         Task<int> SaveChangesAsync();
     }
 
