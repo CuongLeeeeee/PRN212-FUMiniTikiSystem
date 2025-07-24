@@ -33,11 +33,15 @@ namespace GROUP7WPF
                     services.AddDbContext<FuminiTikiSystemContext>(options =>
                         options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-                    // Đăng ký các repository, 
+                    // Đăng ký các repository
                     services.AddScoped<ICustomerRepository, CustomerRepository>();
+                    services.AddScoped<IProductRepository, ProductRepository>();
+                    services.AddScoped<ICategoryRepository, CategoryRepository>();
 
                     // Đăng ký các và service
                     services.AddScoped<ICustomerService, CustomerService>();
+                    services.AddScoped<IProductService, ProductService>();
+                    services.AddScoped<ICategoryService, CategoryService>();
 
                     // Đăng ký unit of work 
                     services.AddScoped<IUnitOfWork, UnitOfWork>();
