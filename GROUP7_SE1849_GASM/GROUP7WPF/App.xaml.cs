@@ -37,11 +37,13 @@ namespace GROUP7WPF
                     services.AddScoped<ICustomerRepository, CustomerRepository>();
                     services.AddScoped<IProductRepository, ProductRepository>();
                     services.AddScoped<ICategoryRepository, CategoryRepository>();
+                    services.AddScoped<IOrderRepository, OrderRepository>();
 
                     // Đăng ký các và service
                     services.AddScoped<ICustomerService, CustomerService>();
                     services.AddScoped<IProductService, ProductService>();
                     services.AddScoped<ICategoryService, CategoryService>();
+                    services.AddScoped<IOrderService, OrderService>();
 
                     // Đăng ký unit of work 
                     services.AddScoped<IUnitOfWork, UnitOfWork>();
