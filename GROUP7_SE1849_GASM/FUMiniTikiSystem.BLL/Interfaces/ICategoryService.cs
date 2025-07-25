@@ -13,5 +13,6 @@ namespace FUMiniTikiSystem.BLL.Interfaces
         Task AddAsync(Category category);
         Task UpdateAsync(Category category);
         Task DeleteAsync(Category category);
+
     }
 }

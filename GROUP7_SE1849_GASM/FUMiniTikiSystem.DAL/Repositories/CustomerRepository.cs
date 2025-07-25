@@ -27,6 +27,24 @@ namespace FUMiniTikiSystem.DAL.Repositories
             _context.Update(customer);
             return true;
         }
+        public async Task<bool> RegisterAsync(string name, string email, string password)
+        {
+
+            var existingCustomer = await _dbSet.FirstOrDefaultAsync(c => c.Email == email);
+            if (existingCustomer != null)
+                return false;
+
+            var newCustomer = new Customer
+            {
+                Name = name,
+                Email = email,
+                Password = password
+            };
+
+            await _dbSet.AddAsync(newCustomer);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 
 }

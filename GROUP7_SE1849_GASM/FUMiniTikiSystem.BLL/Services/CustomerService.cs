@@ -8,6 +8,7 @@ using FUMiniTikiSystem.DAL;
 using FUMiniTikiSystem.DAL.Entities;
 using FUMiniTikiSystem.DAL.Interfaces;
 using FUMiniTikiSystem.DAL.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace FUMiniTikiSystem.BLL.Services
 {
@@ -32,6 +33,7 @@ namespace FUMiniTikiSystem.BLL.Services
         {
             return await _repo.LoginAsync(email, password);
         }
+
 
         public Task LogoutAsync()
         {
@@ -69,6 +71,10 @@ namespace FUMiniTikiSystem.BLL.Services
                 _repo.Delete(customer);
                 await _unitOfWork.SaveChangesAsync();
             }
+        }
+        public async Task<bool> RegisterAsync(string name, string email, string password)
+        {
+            return await _repo.RegisterAsync(name, email, password);
         }
     }
 }

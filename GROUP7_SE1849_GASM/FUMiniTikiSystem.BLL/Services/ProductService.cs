@@ -53,5 +53,20 @@ namespace FUMiniTikiSystem.BLL.Services
                 await _unitOfWork.SaveChangesAsync();
             }
         }
+        public async Task<List<Product>> SearchAsync(string keyword)
+        {
+            var allProducts = await _repo.GetAllAsync();
+
+            if (string.IsNullOrWhiteSpace(keyword))
+                return allProducts.ToList();
+
+            keyword = keyword.ToLower();
+
+            return allProducts
+                .Where(p =>
+                    p.Name.ToLower().Contains(keyword) ||
+                    (!string.IsNullOrEmpty(p.Description) && p.Description.ToLower().Contains(keyword)))
+                .ToList();
+        }
     }
 }

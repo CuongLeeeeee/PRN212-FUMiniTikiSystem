@@ -16,5 +16,6 @@ namespace FUMiniTikiSystem.BLL.Interfaces
         Task AddAsync(Customer customer);
         Task UpdateAsync(Customer customer);
         Task DeleteAsync(Customer customer);
+        Task<bool> RegisterAsync(string name, string email, string password);
     }
 }

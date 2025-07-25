@@ -9,5 +9,6 @@ namespace FUMiniTikiSystem.DAL.Interfaces
 {
     public interface IProductRepository:IRepository<Product>
     {
+
     }
 }

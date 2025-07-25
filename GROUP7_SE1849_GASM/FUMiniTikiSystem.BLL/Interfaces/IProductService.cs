@@ -13,5 +13,7 @@ namespace FUMiniTikiSystem.BLL.Interfaces
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
         Task DeleteAsync(Product product);
+        Task<List<Product>> SearchAsync(string keyword);
+
     }
 }

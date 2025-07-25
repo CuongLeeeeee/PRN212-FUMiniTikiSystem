@@ -12,7 +12,8 @@ namespace FUMiniTikiSystem.DAL.Repositories
     public class ProductRepository : Repository<Product>, IProductRepository
     {
         public ProductRepository(FuminiTikiSystemContext context) : base(context)
-        {
+        {    
         }
+        public new async Task<IEnumerable<Product>> GetAllAsync() => await _dbSet.Include("Category").ToListAsync();
     }
 }

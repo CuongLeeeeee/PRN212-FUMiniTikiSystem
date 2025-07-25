@@ -12,6 +12,8 @@ namespace FUMiniTikiSystem.DAL.Interfaces
     {
         Task<Customer?> LoginAsync(string email, string password);
         Task<bool> ChangePasswordAsync(int customerId, string oldPassword, string newPassword);
+        Task<bool> RegisterAsync(string name, string email, string password);
+
     }
 
 }

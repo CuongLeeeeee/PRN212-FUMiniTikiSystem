@@ -49,7 +49,9 @@ namespace GROUP7WPF
                     services.AddScoped<IUnitOfWork, UnitOfWork>();
 
                     // Đăng ký UI
-                    services.AddSingleton<MainWindow>();
+                    services.AddSingleton<RegisterWindow>();
+                    services.AddSingleton<LoginWindow>();
+                    services.AddSingleton<ProductCatalogWindow>();
                 })
                 .Build();
         }
@@ -58,7 +60,7 @@ namespace GROUP7WPF
         {
             await AppHost.StartAsync();
 
-            var mainWindow = AppHost.Services.GetRequiredService<MainWindow>();
+            var mainWindow = AppHost.Services.GetRequiredService<LoginWindow>();
             mainWindow.Show();
 
             base.OnStartup(e);

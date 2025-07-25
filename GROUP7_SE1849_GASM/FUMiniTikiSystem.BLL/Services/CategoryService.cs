@@ -23,14 +23,14 @@ namespace FUMiniTikiSystem.BLL.Services
         public Task AddAsync(Category category)
         {
             var result = _repo.AddAsync(category);
-            if(result != null) _unitOfWork.SaveChangesAsync();
+            if (result != null) _unitOfWork.SaveChangesAsync();
             return result;
         }
 
         public async Task DeleteAsync(Category category)
         {
             var result = await _repo.GetByIdAsync(category.CategoryId);
-            if(result != null)
+            if (result != null)
             {
                 _repo.Delete(result);
                 await _unitOfWork.SaveChangesAsync();
@@ -45,7 +45,7 @@ namespace FUMiniTikiSystem.BLL.Services
         public async Task UpdateAsync(Category category)
         {
             var oldProduct = await _repo.GetByIdAsync(category.CategoryId);
-            if(oldProduct != null)
+            if (oldProduct != null)
             {
                 oldProduct.Picture = category.Picture;
                 oldProduct.Name = category.Name;
@@ -53,5 +53,6 @@ namespace FUMiniTikiSystem.BLL.Services
                 await _unitOfWork.SaveChangesAsync();
             }
         }
+        
     }
 }
