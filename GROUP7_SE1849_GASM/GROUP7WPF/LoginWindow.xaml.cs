@@ -33,7 +33,8 @@ namespace GROUP7WPF
             var customer = await _customerService.LoginAsync(email, password);
             if (customer != null)
             {
-                var catalogWindow = new ProductCatalogWindow();
+                bool isAdmin = (customer.Email == "admin@gmail.com"); // tuỳ logic
+                var catalogWindow = new ProductCatalogWindow(isAdmin);
                 catalogWindow.Closed += (s, args) => this.Close();
                 catalogWindow.Show();
                 this.Hide();

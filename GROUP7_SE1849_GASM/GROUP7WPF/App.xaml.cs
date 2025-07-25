@@ -52,6 +52,7 @@ namespace GROUP7WPF
                     services.AddSingleton<RegisterWindow>();
                     services.AddSingleton<LoginWindow>();
                     services.AddSingleton<ProductCatalogWindow>();
+                    services.AddSingleton<AddProductWindow>();
                 })
                 .Build();
         }
