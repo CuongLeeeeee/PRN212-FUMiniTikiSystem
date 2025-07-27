@@ -2,13 +2,15 @@
 using FUMiniTikiSystem.BLL.Services;
 using FUMiniTikiSystem.DAL.Repositories;
 using FUMiniTikiSystem.DAL;
+using Microsoft.Extensions.Configuration;
 
 namespace GROUP7WPF
 {
     public partial class LoginWindow : Window
     {
         private readonly CustomerService _customerService;
-
+        private string _adminEmail;
+        private string _adminPassword;
         public LoginWindow()
         {
             InitializeComponent();
@@ -17,6 +19,13 @@ namespace GROUP7WPF
             var repo = new CustomerRepository(dbContext);
             var unitOfWork = new UnitOfWork(dbContext);
             _customerService = new CustomerService(repo, unitOfWork);
+            var config = new ConfigurationBuilder()
+        .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+        .AddJsonFile("appsettings.json")
+        .Build();
+
+            _adminEmail = config["AdminAccount:Email"];
+            _adminPassword = config["AdminAccount:Password"];
         }
 
         private async void Login_Click(object sender, RoutedEventArgs e)
@@ -24,16 +33,21 @@ namespace GROUP7WPF
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Password.Trim();
 
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            if(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
                 MessageBox.Show("Please fill in all fields.");
                 return;
             }
 
             var customer = await _customerService.LoginAsync(email, password);
-            if (customer != null)
+            bool isAdmin =
+string.Equals(email, _adminEmail.Trim(), StringComparison.OrdinalIgnoreCase) &&
+string.Equals(password, _adminPassword.Trim(), StringComparison.Ordinal);
+            if(customer != null || isAdmin)
             {
-                bool isAdmin = (customer.Email == "admin@gmail.com"); // tuỳ logic
+                // So sánh với cấu hình trong appsettings.json
+
+
                 var catalogWindow = new ProductCatalogWindow(isAdmin);
                 catalogWindow.Closed += (s, args) => this.Close();
                 catalogWindow.Show();
@@ -41,9 +55,10 @@ namespace GROUP7WPF
             }
             else
             {
-                MessageBox.Show("Invalid email or password.");
+                MessageBox.Show($"{_adminEmail} {email} {_adminPassword} {password}");
             }
         }
+
 
         private void Register_Click(object sender, RoutedEventArgs e)
         {
