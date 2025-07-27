@@ -36,13 +36,26 @@ namespace GROUP7WPF
             string name = txtName.Text.Trim();
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Password.Trim();
+            string confirmPassword = txtConfirmPassword.Password.Trim(); // 👈 Lấy giá trị xác nhận mật khẩu
 
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            // Kiểm tra trống
+            if (string.IsNullOrWhiteSpace(name) ||
+                string.IsNullOrWhiteSpace(email) ||
+                string.IsNullOrWhiteSpace(password) ||
+                string.IsNullOrWhiteSpace(confirmPassword))
             {
-                MessageBox.Show("Please fill all fields");
+                MessageBox.Show("Please fill all fields.");
                 return;
             }
 
+            // Kiểm tra mật khẩu và xác nhận khớp nhau
+            if (password != confirmPassword)
+            {
+                MessageBox.Show("Passwords do not match.");
+                return;
+            }
+
+            // Gọi service để đăng ký
             var success = await _service.RegisterAsync(name, email, password);
             if (success)
             {

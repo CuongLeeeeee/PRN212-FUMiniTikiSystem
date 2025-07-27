@@ -22,7 +22,7 @@
 
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="Register" FontSize="20" FontWeight="Bold" 
-                           HorizontalAlignment="Center" Margin="0 0 0 20"/>
+               HorizontalAlignment="Center" Margin="0 0 0 20"/>
 
                 <TextBlock Text="Name" FontWeight="SemiBold"/>
                 <TextBox x:Name="txtName" Margin="0 5 0 10" Height="30"/>
@@ -31,10 +31,14 @@
                 <TextBox x:Name="txtEmail" Margin="0 5 0 10" Height="30"/>
 
                 <TextBlock Text="Password" FontWeight="SemiBold"/>
-                <PasswordBox x:Name="txtPassword" Margin="0 5 0 20" Height="30"/>
+                <PasswordBox x:Name="txtPassword" Margin="0 5 0 10" Height="30"/>
+
+                <!-- ✅ Confirm Password line added -->
+                <TextBlock Text="Confirm Password" FontWeight="SemiBold"/>
+                <PasswordBox x:Name="txtConfirmPassword" Margin="0 5 0 20" Height="30"/>
 
                 <Button Content="Register" Width="100" Height="35" HorizontalAlignment="Center"
-                        Background="#007ACC" Foreground="White" FontWeight="Bold" Click="Register_Click"/>
+            Background="#007ACC" Foreground="White" FontWeight="Bold" Click="Register_Click"/>
             </StackPanel>
         </Border>
     </Grid>
