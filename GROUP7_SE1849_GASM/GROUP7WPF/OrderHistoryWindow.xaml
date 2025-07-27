@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GROUP7WPF"
         mc:Ignorable="d"
-        Title="Order History" Height="500" Width="800"
+        Title="Order History" Height="500" Width="600"
         WindowStartupLocation="CenterScreen"
         Background="#f4f4f4">
 
@@ -32,7 +32,7 @@
                         <GridViewColumn Header="Order ID" DisplayMemberBinding="{Binding OrderId}" Width="120"/>
                         <GridViewColumn Header="Order Date" DisplayMemberBinding="{Binding OrderDate}" Width="200"/>
                         <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding OrderAmount}" Width="120"/>
-                        <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="200"/>
+                        
                     </GridView>
                 </ListView.View>
             </ListView>
