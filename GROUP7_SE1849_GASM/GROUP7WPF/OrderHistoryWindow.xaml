@@ -5,26 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GROUP7WPF"
         mc:Ignorable="d"
-        Title="OrderHistoryWindow" Height="450" Width="800">
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        Title="Order History" Height="500" Width="800"
+        WindowStartupLocation="CenterScreen"
+        Background="#f4f4f4">
 
-        <!-- Order List -->
-        <ListView x:Name="lvOrders" Grid.Row="0">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Order ID" DisplayMemberBinding="{Binding OrderId}" Width="100"/>
-                    <GridViewColumn Header="Order Date" DisplayMemberBinding="{Binding OrderDate}" Width="150"/>
-                    <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding OrderAmount}" Width="100"/>
-                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="150"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+    <Border Margin="20" CornerRadius="10" Background="White" Padding="20" BorderBrush="#ccc" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <Button Content="Close" Width="80" Height="30" HorizontalAlignment="Right" Margin="0,10,0,0"
-                Grid.Row="1" Click="Close_Click"/>
-    </Grid>
+            <!-- Header -->
+            <TextBlock Text="Order History"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="#2c3e50"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,15"/>
+
+            <!-- Order List -->
+            <ListView x:Name="lvOrders" Grid.Row="1" Margin="0,10,0,10">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Order ID" DisplayMemberBinding="{Binding OrderId}" Width="120"/>
+                        <GridViewColumn Header="Order Date" DisplayMemberBinding="{Binding OrderDate}" Width="200"/>
+                        <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding OrderAmount}" Width="120"/>
+                        <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="200"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <!-- Close Button -->
+            <Button Content="Close"
+                    Grid.Row="2"
+                    Width="100"
+                    Height="35"
+                    HorizontalAlignment="Right"
+                    Background="#e74c3c"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    BorderBrush="#c0392b"
+                    BorderThickness="1"
+                    Cursor="Hand"
+                    Click="Close_Click"/>
+        </Grid>
+    </Border>
 </Window>
