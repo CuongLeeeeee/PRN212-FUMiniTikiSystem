@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GROUP7WPF"
         mc:Ignorable="d"
-        Title="ProductCatalogWindow" Height="450" Width="800">
+        Title="ProductCatalogWindow" Height="450" Width="850">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -17,12 +17,16 @@
             <TextBox x:Name="txtSearch" Width="200" Margin="0,0,10,0"/>
             <ComboBox x:Name="cbCategory" Width="200" DisplayMemberPath="Name"/>
             <Button Content="Search" Margin="10,0,0,0" Click="Search_Click"/>
-            <!-- Admin Buttons (ẩn/hiện bằng Visibility trong code-behind) -->
+
+            <!-- Product CRUD Buttons -->
             <Button x:Name="btnAddCategory" Content="Add Product" Margin="10,0,0,0" Click="AddProduct_Click"/>
             <Button x:Name="btnEditCategory" Content="Edit Product" Margin="5,0,0,0" Click="EditProduct_Click"/>
             <Button x:Name="btnDeleteCategory" Content="Delete Product" Margin="5,0,0,0" Click="DeleteProduct_Click"/>
+            <Button x:Name="btnViewOrderDetail" Content="View Orders" Margin="10,0,0,0" Click="ViewOrderDetail_Click"/>
+            <!-- Category Manager Button -->
+            
+            <Button x:Name="btnCategoryManager" Content="Category Manager" Margin="10,0,0,0" Click="CategoryManager_Click"/>
         </StackPanel>
-        
 
         <!-- Product List -->
         <ListView x:Name="lvProducts" Grid.Row="1">
@@ -35,6 +39,5 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
     </Grid>
 </Window>

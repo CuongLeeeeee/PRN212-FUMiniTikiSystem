@@ -38,6 +38,7 @@ namespace GROUP7WPF
             btnAddCategory.Visibility = _isAdmin ? Visibility.Visible : Visibility.Collapsed;
             btnEditCategory.Visibility = _isAdmin ? Visibility.Visible : Visibility.Collapsed;
             btnDeleteCategory.Visibility = _isAdmin ? Visibility.Visible : Visibility.Collapsed;
+            btnCategoryManager.Visibility = _isAdmin ? Visibility.Visible : Visibility.Collapsed;
 
             var dbContext1 = new FuminiTikiSystemContext(); // cho sản phẩm
             var dbContext2 = new FuminiTikiSystemContext(); // cho danh mục
@@ -150,6 +151,21 @@ namespace GROUP7WPF
                 LoadAllProducts(); // Làm mới danh sách sau khi xóa
                 MessageBox.Show("Product deleted successfully.");
             }
+        }
+
+        private void CategoryManager_Click(object sender, RoutedEventArgs e)
+        {
+            var categoryWindow = new CategoryManagementWindow();
+            categoryWindow.ShowDialog();
+
+            // Reload category combobox in case categories were updated
+            LoadCategories();
+        }
+
+        private void ViewOrderDetail_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new OrderHistoryWindow();
+            window.ShowDialog();
         }
     }
 }
