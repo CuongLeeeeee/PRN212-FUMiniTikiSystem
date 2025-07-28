@@ -29,7 +29,6 @@ namespace GROUP7WPF
         private readonly bool _isAdmin;
         private readonly UnitOfWork _unitOfWork;
         private readonly int _customerId;
-        private readonly Func<LoginWindow> _loginFactory;
         public ProductCatalogWindow(bool isAdmin, int customerId)
         {
             InitializeComponent();
@@ -50,7 +49,7 @@ namespace GROUP7WPF
             var repo = new ProductRepository(dbContext1);
             var unitOfWork = new UnitOfWork(dbContext1);
 
-            LoadAllProducts();
+             LoadAllProducts();
             LoadCategories();
         }
         private async void LoadCategories()
@@ -66,9 +65,11 @@ namespace GROUP7WPF
             cbCategory.SelectedIndex = 0;
         }
 
-        private async void LoadAllProducts()
+        private async Task LoadAllProducts()
         {
+            lvProducts.ItemsSource = null;
             _allProducts = await _productService.GetAllAsync(); // ✅ gán vào _allProducts
+
             lvProducts.ItemsSource = _allProducts;
         }
 
@@ -102,16 +103,14 @@ namespace GROUP7WPF
 
             lvProducts.ItemsSource = filtered;
         }
-        private void AddProduct_Click(object sender, RoutedEventArgs e)
+        private async void AddProduct_Click(object sender, RoutedEventArgs e)
         {
             var window = new AddProductWindow();
             if (window.ShowDialog() == true)
             {
-                LoadAllProducts(); // refresh lại danh sách
+               await  LoadAllProducts(); // refresh lại danh sách
             }
         }
-
-
 
         private void EditProduct_Click(object sender, RoutedEventArgs e)
         {
@@ -125,7 +124,7 @@ namespace GROUP7WPF
             var window = new AddProductWindow(selected);
             if (window.ShowDialog() == true)
             {
-                LoadAllProducts(); // refresh
+                 LoadAllProducts(); // refresh
             }
         }
 

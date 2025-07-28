@@ -37,22 +37,22 @@ namespace GROUP7WPF
             LoadCategories();
         }
 
-        private async void LoadCategories()
+        private async Task LoadCategories()
         {
             var categories = await _categoryService.GetAllAsync();
             lvCategories.ItemsSource = categories;
         }
 
-        private void Add_Click(object sender, RoutedEventArgs e)
+        private async void Add_Click(object sender, RoutedEventArgs e)
         {
             var addWindow = new AddEditCategoryWindow();
             if (addWindow.ShowDialog() == true)
             {
-                LoadCategories();
+               await  LoadCategories();
             }
         }
 
-        private void Edit_Click(object sender, RoutedEventArgs e)
+        private async void Edit_Click(object sender, RoutedEventArgs e)
         {
             var selected = lvCategories.SelectedItem as Category;
             if (selected == null)
@@ -64,7 +64,7 @@ namespace GROUP7WPF
             var editWindow = new AddEditCategoryWindow(selected);
             if (editWindow.ShowDialog() == true)
             {
-                LoadCategories();
+                await LoadCategories();
             }
         }
 
