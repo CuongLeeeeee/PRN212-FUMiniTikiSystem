@@ -29,6 +29,7 @@ namespace GROUP7WPF
         private readonly bool _isAdmin;
         private readonly UnitOfWork _unitOfWork;
         private readonly int _customerId;
+        private readonly Func<LoginWindow> _loginFactory;
         public ProductCatalogWindow(bool isAdmin, int customerId)
         {
             InitializeComponent();
@@ -48,7 +49,6 @@ namespace GROUP7WPF
 
             var repo = new ProductRepository(dbContext1);
             var unitOfWork = new UnitOfWork(dbContext1);
-            
 
             LoadAllProducts();
             LoadCategories();
@@ -167,5 +167,19 @@ namespace GROUP7WPF
             var window = new OrderHistoryWindow(_customerId);
             window.ShowDialog();
         }
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you want to logout?", "Confirm Logout",
+                                         MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if(result == MessageBoxResult.Yes)
+            {
+                var loginWindow = new LoginWindow();
+                loginWindow.Show();
+                Application.Current.MainWindow = loginWindow; // Gán lại MainWindow để giữ app sống
+                this.Close();
+            }
+        }
+
     }
 }

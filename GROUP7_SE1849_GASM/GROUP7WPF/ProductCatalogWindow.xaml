@@ -12,7 +12,11 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <!-- Top controls -->
             <RowDefinition Height="*"/>
+            <!-- Product list -->
+            <RowDefinition Height="Auto"/>
+            <!-- Logout button -->
         </Grid.RowDefinitions>
 
         <!-- Top Control Panel -->
@@ -68,5 +72,12 @@
                 </ListView.View>
             </ListView>
         </Border>
+
+        <!-- Logout Button at Bottom Left -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,10,0,0">
+            <Button x:Name="btnLogout" Content="Logout" Height="30" Width="100"
+                    Background="#343a40" Foreground="White"
+                    Click="Logout_Click"/>
+        </StackPanel>
     </Grid>
 </Window>
