@@ -9,6 +9,6 @@ namespace FUMiniTikiSystem.DAL.Interfaces
 {
     public interface IOrderRepository : IRepository<Order>
     {
-
+        public Task<List<Order>> GetByCustomerIdAsync(int customerId);
     }
 }

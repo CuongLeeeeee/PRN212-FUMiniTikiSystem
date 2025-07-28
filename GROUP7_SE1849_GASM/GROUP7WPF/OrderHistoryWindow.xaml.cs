@@ -24,17 +24,16 @@ namespace GROUP7WPF
     public partial class OrderHistoryWindow : Window
     {
         private readonly IOrderService _orderService;
-
-        public OrderHistoryWindow()
+        private readonly int _customerId;
+        public OrderHistoryWindow(int customerId)
         {
             InitializeComponent();
 
-            // Khởi tạo service (nếu không dùng DI container)
             var context = new FuminiTikiSystemContext();
             var repo = new OrderRepository(context);
             var unitOfWork = new UnitOfWork(context);
             _orderService = new OrderService(repo, unitOfWork);
-
+            _customerId = customerId;
             Loaded += OrderHistoryWindow_Loaded;
         }
 
@@ -45,7 +44,7 @@ namespace GROUP7WPF
 
         private async Task LoadOrders()
         {
-            var orders = await _orderService.GetAllAsync();
+            var orders = await _orderService.GetByCustomerIdAsync(_customerId);
             lvOrders.ItemsSource = orders;
         }
 

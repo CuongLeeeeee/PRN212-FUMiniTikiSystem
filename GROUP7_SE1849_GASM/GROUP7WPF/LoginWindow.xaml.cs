@@ -46,16 +46,19 @@ string.Equals(password, _adminPassword.Trim(), StringComparison.Ordinal);
             if(customer != null || isAdmin)
             {
                 // So sánh với cấu hình trong appsettings.json
-
-
-                var catalogWindow = new ProductCatalogWindow(isAdmin);
+                int customerId = int.MaxValue;
+                if(!isAdmin)
+                {
+                    customerId =customer.CustomerId;
+                }
+                var catalogWindow = new ProductCatalogWindow(isAdmin, customerId);
                 catalogWindow.Closed += (s, args) => this.Close();
                 catalogWindow.Show();
                 this.Hide();
             }
             else
             {
-                MessageBox.Show($"{_adminEmail} {email} {_adminPassword} {password}");
+                MessageBox.Show($"Login failed");
             }
         }
 

@@ -42,6 +42,11 @@ namespace FUMiniTikiSystem.BLL.Services
             return (List<Order>)await _repo.GetAllAsync();
         }
 
+        public Task<List<Order>> GetByCustomerIdAsync(int customerId)
+        {
+            return _repo.GetByCustomerIdAsync(customerId);
+        }
+
         public async Task UpdateAsync(Order order)
         {
             var oldOrder = await _repo.GetByIdAsync(order.OrderId);

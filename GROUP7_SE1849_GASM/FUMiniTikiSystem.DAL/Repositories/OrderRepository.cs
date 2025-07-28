@@ -14,5 +14,9 @@ namespace FUMiniTikiSystem.DAL.Repositories
         public OrderRepository(FuminiTikiSystemContext context) : base(context)
         {
         }
+        public Task<List<Order>> GetByCustomerIdAsync(int customerId)
+        {
+            return _dbSet.Where(p => p.CustomerId == customerId).ToListAsync();
+        }
     }
 }

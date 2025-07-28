@@ -28,12 +28,12 @@ namespace GROUP7WPF
         private readonly CategoryRepository _categoryRepo;
         private readonly bool _isAdmin;
         private readonly UnitOfWork _unitOfWork;
-
-        public ProductCatalogWindow(bool isAdmin)
+        private readonly int _customerId;
+        public ProductCatalogWindow(bool isAdmin, int customerId)
         {
             InitializeComponent();
             _isAdmin = isAdmin;
-
+            _customerId = customerId;
             // Ẩn hoặc hiển thị nút admin
             btnAddCategory.Visibility = _isAdmin ? Visibility.Visible : Visibility.Collapsed;
             btnEditCategory.Visibility = _isAdmin ? Visibility.Visible : Visibility.Collapsed;
@@ -164,7 +164,7 @@ namespace GROUP7WPF
 
         private void ViewOrderDetail_Click(object sender, RoutedEventArgs e)
         {
-            var window = new OrderHistoryWindow();
+            var window = new OrderHistoryWindow(_customerId);
             window.ShowDialog();
         }
     }
